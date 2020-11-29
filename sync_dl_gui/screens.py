@@ -32,8 +32,7 @@ import sync_dl.commands as cmds
 from sync_dl import noInterrupt
 import sync_dl.config as cfg
 
-
-
+from elements import Console,PlaylistList
 
 class Runner:
     '''
@@ -76,72 +75,24 @@ class Runner:
 
 runner=Runner()
 
-class ConsoleHandler(logging.Handler):
-
-    def __init__(self, console, level=logging.NOTSET):
-        logging.Handler.__init__(self, level=level)
-        self.console = console
-
-    def emit(self, record):
-        Clock.schedule_once(lambda x:self.console.append(self.format(record)))
 
 
-class WindowManager(ScreenManager):
+
+class ScreenManager(ScreenManager):
     def __init__(self,**kwargs):
-
-        super(WindowManager, self).__init__(**kwargs)
+        super(ScreenManager, self).__init__(**kwargs)
         cfg.logger.setLevel(logging.INFO)
 
 
-class PlaylistList(GridLayout):
-    def __init__(self, **kwargs):
-        super(PlaylistList, self).__init__(**kwargs)
-
-        self.updateList()
-
-    def updateList(self):
-        '''
-        Populates list of existing playlists as buttons
-        '''
-        self.clear_widgets()
-        playlists = os.listdir(cfg.musicDir)
-        for playlist in playlists:
-            if os.path.exists(f"{cfg.musicDir}/{playlist}/{cfg.metaDataName}"):
-                button = Button(
-                    text=playlist,
-                    on_press = self.playlistClicked
-                    #on_release = test
-                )
-                self.add_widget(button)
-    
-    def playlistClicked(self,button):
-        manager = App.get_running_app().root
-
-        existingPlWindow = manager.get_screen('existingPlWindow')
-        existingPlWindow.plName = button.text
-        manager.current ='existingPlWindow'
-
-        manager.transition.direction = "left"
-
-class Console(TextInput):
-    def __init__(self, **kwargs):
-        super(Console, self).__init__(**kwargs)
-        #self.keyboard_mode= 'managed'
-        self.cursor=False
-
-        cfg.logger.addHandler(ConsoleHandler(self))
-
-    def append(self,text):
-        self.readonly=False
-        self.insert_text(f' ~ {text}\n')
-        self.readonly=True
 
 
 
-class MainWindow(Screen):
+
+
+class MainScreen(Screen):
     playlists = ObjectProperty(None)
     def __init__(self, **kwargs):
-        super(MainWindow, self).__init__(**kwargs)
+        super(MainScreen, self).__init__(**kwargs)
     
     def on_pre_enter(self):
         if self.playlists:
@@ -150,7 +101,7 @@ class MainWindow(Screen):
 
 
     
-class NewPlWindow(Screen):
+class NewPlScreen(Screen):
     url = ObjectProperty(None)
     plName = ObjectProperty(None)
     console = ObjectProperty(Console)
@@ -163,7 +114,7 @@ class NewPlWindow(Screen):
         noInterrupt.simulateSigint()
 
 
-class ExistingPlWindow(Screen):
+class ExistingPlScreen(Screen):
     plName = ''
     plLabel = ObjectProperty(None)
     console = ObjectProperty(None)
@@ -185,18 +136,3 @@ class ExistingPlWindow(Screen):
     
     def cancel(self):
         noInterrupt.simulateSigint()
-
-    
-
-
-
-class Main(App):
-    def build(self):
-        layout = Builder.load_file('kvMan.kv')
-        return layout
-
-    
-
-if __name__ == "__main__":
-
-    Main().run()

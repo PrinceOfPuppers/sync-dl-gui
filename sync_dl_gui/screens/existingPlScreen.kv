@@ -1,0 +1,40 @@
+<ExistingPlScreen>:
+    name: "existingPlScreen"
+    console: console
+    plLabel: plLabel
+    GridLayout:
+        cols:1
+        Label:
+            text: ''
+            id: plLabel
+            font_size: dp(50)
+        Button:
+            text: "Smart Sync"
+            on_release: 
+                root.smartSync()
+        Button:
+
+            text: "Append New Songs"
+            on_release: 
+                root.appendNew()
+        Button:
+            text: "Reorder Songs"
+            on_release: 
+                root.reorder()        
+        
+
+        Console:
+            id: console
+
+        GridLayout:
+            cols:2
+            Button: 
+                text: "Back"
+                on_release: 
+                    app.root.current = 'mainScreen'
+                    root.manager.transition.direction = "right"
+            
+            Button: 
+                text: "Cancel"
+                on_release: 
+                    root.cancel()

@@ -1,0 +1,46 @@
+<NewPlScreen>:
+    name: "newPlScreen"
+    url: url
+    plName: plName
+    console: console
+    GridLayout:
+        cols:1
+
+        GridLayout:
+            cols:2
+            Label:
+                text: "URL"
+            
+            TextInput:
+                id: url
+                multiline: False
+
+
+            Label:
+                text: "Name"
+            
+            TextInput:
+                id: plName
+                multiline: False
+
+        Button: 
+            text: "Create"
+            on_release: 
+                root.create()
+
+        Console:
+            id: console
+
+
+        GridLayout:
+            cols:2
+            Button: 
+                text: "Back"
+                on_release: 
+                    app.root.current = 'mainScreen'
+                    root.manager.transition.direction = "right"
+            
+            Button: 
+                text: "Cancel"
+                on_release: 
+                    root.cancel()
