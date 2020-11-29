@@ -3,7 +3,9 @@ import kivy
 from kivy.app import App
 
 from kivy.lang import Builder
-from screens import ScreenManager,MainScreen,NewPlScreen,ExistingPlScreen
+
+
+from screens import SManager,MainScreen,NewPlScreen,ExistingPlScreen
 
 class Main(App):
     def build(self):

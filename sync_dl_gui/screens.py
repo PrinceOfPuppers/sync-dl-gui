@@ -1,9 +1,4 @@
-
-
-
-
 import logging
-
 
 import kivy
 
@@ -29,8 +24,10 @@ from queue import Queue
 from io import StringIO
 import sync_dl
 import sync_dl.commands as cmds
+from sync_dl.plManagement import editPlaylist
 from sync_dl import noInterrupt
 import sync_dl.config as cfg
+import time
 
 from elements import Console,PlaylistList
 
@@ -41,33 +38,35 @@ class Runner:
 
     '''
     def __init__(self):
-        self.job = Queue(1)
+        self.jobQueue = Queue(1)
 
         self.working=False
 
         self.t=threading.Thread(target = self.start)
         self.t.start()
 
-    def addJob(self,job,args):
+    def addJob(self,job,plPath,*args):
         if self.working:
             cfg.logger.info("Command Currently Running")
         else:
-            self.job.put((job,args))
+            self.jobQueue.put((job,plPath,args))
 
 
     def start(self):
         while threading.main_thread().is_alive():
             try:
-                job = self.job.get(timeout=3)
+                package = self.jobQueue.get(timeout=3)
             except:
                 continue
 
             self.working=True
 
+            job,plPath,args=package
             try:
-                job[0](*job[1])
+                job(plPath,*args)
                 cfg.logger.info("Done!")
             except:
+                sync_dl.plManagement.correctStateCorruption(plPath)
                 cfg.logger.info("Cancelled")
             
             self.working=False
@@ -76,17 +75,10 @@ class Runner:
 runner=Runner()
 
 
-
-
-class ScreenManager(ScreenManager):
+class SManager(ScreenManager):
     def __init__(self,**kwargs):
-        super(ScreenManager, self).__init__(**kwargs)
+        super(SManager, self).__init__(**kwargs)
         cfg.logger.setLevel(logging.INFO)
-
-
-
-
-
 
 
 class MainScreen(Screen):
@@ -98,8 +90,6 @@ class MainScreen(Screen):
         if self.playlists:
             self.playlists.updateList()
 
-
-
     
 class NewPlScreen(Screen):
     url = ObjectProperty(None)
@@ -108,7 +98,7 @@ class NewPlScreen(Screen):
 
 
     def create(self):
-        runner.addJob(cmds.newPlaylist,[f"{cfg.musicDir}/{self.plName.text}",self.url.text])
+        runner.addJob(cmds.newPlaylist,f"{cfg.musicDir}/{self.plName.text}",self.url.text)
 
     def cancel(self):
         noInterrupt.simulateSigint()
@@ -126,13 +116,43 @@ class ExistingPlScreen(Screen):
 
 
     def smartSync(self):
-        runner.addJob(cmds.smartSync,[f"{cfg.musicDir}/{self.plName}"])
+        runner.addJob(cmds.smartSync,f"{cfg.musicDir}/{self.plName}")
     
     def appendNew(self):
-        runner.addJob(cmds.appendNew,[f"{cfg.musicDir}/{self.plName}"])
+        runner.addJob(cmds.appendNew,f"{cfg.musicDir}/{self.plName}")
     
-    def reorder(self):
-        print(self.plName)
+    def reOrder(self):
+        manager = self.manager
+
+        reOrderScreen = manager.get_screen('reOrderScreen')
+        reOrderScreen.plName = self.plName
+        manager.current ='reOrderScreen'
+        manager.transition.direction = "left"
     
     def cancel(self):
         noInterrupt.simulateSigint()
+    
+    def info(self):
+        runner.addJob(cmds.compareMetaData,f"{cfg.musicDir}/{self.plName}")
+        runner.addJob(cmds.showPlaylist,f"{cfg.musicDir}/{self.plName}",'')
+
+class ReOrderScreen(Screen):
+    plName = ''
+    plLabel = ObjectProperty(None)
+    songList = ObjectProperty(None)
+
+    def on_pre_enter(self):
+        self.plLabel.text = self.plName
+
+        self.songList.updateSongs(f"{cfg.musicDir}/{self.plName}")
+
+
+    def apply(self):
+        newOrder = self.songList.getOrder()
+        runner.addJob(editPlaylist,f"{cfg.musicDir}/{self.plName}",newOrder)
+        
+        time.sleep(0.1)
+        while runner.working:
+            time.sleep(0.1)
+
+        self.songList.updateSongs(f"{cfg.musicDir}/{self.plName}")

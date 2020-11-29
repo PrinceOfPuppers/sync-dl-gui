@@ -1,0 +1,32 @@
+<ReOrderScreen>:
+    name: "reOrderScreen"
+    songList: songList
+    plLabel: plLabel
+
+    GridLayout:
+        cols:1
+        Label:
+            id: plLabel
+            text:''
+            
+        ScrollView:
+            SongList:
+                id: songList
+                cols:1
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 40
+
+        GridLayout:
+            cols:2
+            Button: 
+                text: "Back"
+                on_release: 
+                    app.root.current = 'existingPlScreen'
+                    root.manager.transition.direction = "right"
+            
+            Button: 
+                text: "Apply"
+                on_release: 
+                    root.apply()
