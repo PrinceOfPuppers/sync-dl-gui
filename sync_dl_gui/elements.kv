@@ -1,15 +1,57 @@
 
-
+# Functional
 <Console>
     foreground_color: (1,1,1,1)
     background_color: (1,1,1,0)
     font_name: 'RobotoMono-Regular'
 
 <PlaylistList>
-
+    orientation: "vertical"
+    size_hint_y: None
+    height: self.minimum_height
+    row_default_height: 60
+    cols:1
 
 <DragLabel>
     # Define the properties for the DragLabel
     drag_rectangle: self.x, self.y, self.width, self.height
     drag_timeout: 10000000
     drag_distance: 0
+
+<SongList>
+    cols:1
+    orientation: "vertical"
+    size_hint_y: None
+    height: self.minimum_height
+    row_default_height: 40
+
+
+<Button@Button>:
+
+    padding:10,10
+
+
+# Visual
+<Title@Label>:
+    size_hint_y:None
+    size: app.relSize(1,0.25)
+
+    font_size: dp(80)
+
+<Header@Label>:
+    size_hint_y:None
+    size: app.relSize(1,0.15)
+
+    font_size: dp(50)
+
+
+
+
+<BottomButtons@GridLayout>:
+    size_hint_y:None
+    size: app.relSize(1,0.1)
+
+
+<MidButtons@GridLayout>:
+    size_hint_y:None
+    size: app.relSize(1,0.1)

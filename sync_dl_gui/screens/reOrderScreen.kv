@@ -5,20 +5,23 @@
 
     GridLayout:
         cols:1
-        Label:
+        Header:
             id: plLabel
             text:''
             
         ScrollView:
             SongList:
                 id: songList
-                cols:1
-                orientation: "vertical"
-                size_hint_y: None
-                height: self.minimum_height
-                row_default_height: 40
 
-        GridLayout:
+
+        BottomButtons: 
+            cols:1
+            Button:
+                text: "Apply"
+                on_release: 
+                    root.apply()
+
+        BottomButtons:
             cols:2
             Button: 
                 text: "Back"
@@ -27,6 +30,6 @@
                     root.manager.transition.direction = "right"
             
             Button: 
-                text: "Apply"
+                text: "Cancel"
                 on_release: 
-                    root.apply()
+                    root.cancel()

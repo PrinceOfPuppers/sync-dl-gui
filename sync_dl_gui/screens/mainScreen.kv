@@ -1,26 +1,36 @@
+
 <MainScreen>:
     name: "mainScreen"
     playlists:playlists
     GridLayout:
         cols:1
-        Label: 
-            text: "Sync-dl"
-            font_size: dp(50)
-        Button:
 
-            text: "New Playlist"
-            on_release: 
-                app.root.current = 'newPlScreen'
-                root.manager.transition.direction = "left"
+        Title: 
+            text: "Sync-dl"
+
+        MidButtons:
+            cols:2
+            Button:
+                text: "New Playlist"
+
+                on_release: 
+                    app.root.current = 'newPlScreen'
+                    root.manager.transition.direction = "left"
+            Button:
+                text: "Settings"
+
+                on_release: 
+                    app.root.current = 'newPlScreen'
+                    root.manager.transition.direction = "left"
+
         Label: 
             text: "Sync-dl Playlists"
-            height:
+            size_hint_y:None
+            size: app.relSize(1,0.1)
+            font_size: dp(20)
+
         ScrollView:
 
             PlaylistList:
                 id: playlists
-                orientation: "vertical"
-                size_hint_y: None
-                height: self.minimum_height
-                row_default_height: 60
-                cols:1
+

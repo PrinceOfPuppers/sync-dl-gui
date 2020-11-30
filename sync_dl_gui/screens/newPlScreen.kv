@@ -6,15 +6,17 @@
     GridLayout:
         cols:1
 
+        Header: 
+            text: 'New Playlist'
         GridLayout:
             cols:2
             Label:
                 text: "URL"
+
             
             TextInput:
                 id: url
                 multiline: False
-
 
             Label:
                 text: "Name"
@@ -23,16 +25,18 @@
                 id: plName
                 multiline: False
 
-        Button: 
-            text: "Create"
-            on_release: 
-                root.create()
+        MidButtons:
+            cols:1
+            Button: 
+                text: "Create"
+                on_release: 
+                    root.create()
 
         Console:
             id: console
 
 
-        GridLayout:
+        BottomButtons:
             cols:2
             Button: 
                 text: "Back"

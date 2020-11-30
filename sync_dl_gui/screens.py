@@ -14,6 +14,7 @@ from kivy.uix.textinput import TextInput
 
 from kivy.properties import ObjectProperty
 
+from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager,Screen
 from kivy.clock import Clock
 
@@ -30,6 +31,7 @@ import sync_dl.config as cfg
 import time
 
 from elements import Console,PlaylistList
+
 
 class Runner:
     '''
@@ -79,6 +81,7 @@ class SManager(ScreenManager):
     def __init__(self,**kwargs):
         super(SManager, self).__init__(**kwargs)
         cfg.logger.setLevel(logging.INFO)
+
 
 
 class MainScreen(Screen):
@@ -155,4 +158,7 @@ class ReOrderScreen(Screen):
         while runner.working:
             time.sleep(0.1)
 
+        self.songList.updateSongs(f"{cfg.musicDir}/{self.plName}")
+    
+    def cancel(self):
         self.songList.updateSongs(f"{cfg.musicDir}/{self.plName}")
