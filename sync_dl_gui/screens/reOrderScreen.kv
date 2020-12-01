@@ -8,28 +8,39 @@
         Header:
             id: plLabel
             text:''
-            
-        ScrollView:
-            SongList:
-                id: songList
+        
+        GridLayout:
+            cols:1
+            padding:(10,10,10,10)
+            ScrollView:
+
+                SongList:
+                    id: songList
 
 
-        BottomButtons: 
+
+        GridLayout: 
+            size_hint_y:None
+            height: root.height*0.1
             cols:1
             Button:
                 text: "Apply"
                 on_release: 
                     root.apply()
 
-        BottomButtons:
+        GridLayout: 
+            size_hint_y:None
+            height: root.height*0.1
             cols:2
             Button: 
+                background_color:darkGreyA
                 text: "Back"
                 on_release: 
-                    app.root.current = 'existingPlScreen'
+                    root.manager.current = 'existingPlScreen'
                     root.manager.transition.direction = "right"
             
             Button: 
+                background_color:darkGreyA
                 text: "Cancel"
                 on_release: 
                     root.cancel()

@@ -6,6 +6,10 @@ from kivy.lang import Builder
 from kivy.core.window import Window
 
 from screens import SManager,MainScreen,NewPlScreen,ExistingPlScreen
+from kivy.config import Config 
+  
+# 0 being off 1 being on as in true / false 
+# you can use 0 or 1 && True or False 
 
 class Main(App):
     def build(self):

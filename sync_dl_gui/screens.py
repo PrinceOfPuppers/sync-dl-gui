@@ -86,8 +86,10 @@ class SManager(ScreenManager):
 
 class MainScreen(Screen):
     playlists = ObjectProperty(None)
+    console = ObjectProperty(None)
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
+        
     
     def on_pre_enter(self):
         if self.playlists:

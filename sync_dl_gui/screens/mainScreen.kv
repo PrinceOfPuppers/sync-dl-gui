@@ -1,36 +1,67 @@
 
+<Buttons@GridLayout>:
+
+    padding:(10,10)
+    spacing:(10,10)
+
+    cols:1
+
+    console:console
+
+    Console:
+        id: console
+    GridLayout:
+        spacing:(10,10)
+        cols:2
+        Button:
+            text: "New Playlist"
+
+            on_release: 
+                app.root.manager.current = 'newPlScreen'
+                app.root.manager.transition.direction = "left"
+        Button:
+            text: "Settings"
+
+            on_release: 
+                app.root.manager.current = 'newPlScreen'
+                app.root.manager.transition.direction = "left"
+
+<PlaylistList>
+    orientation: "vertical"
+
+    cols:1
+    padding:(10,0)
+
 <MainScreen>:
     name: "mainScreen"
     playlists:playlists
+    console:console
     GridLayout:
         cols:1
 
         Title: 
-            text: "Sync-dl"
+            text: "Sync-DL"
+        
+        Buttons:
+            id:console
+            size_hint_y:None
+            height: root.height*0.4
 
-        MidButtons:
-            cols:2
-            Button:
-                text: "New Playlist"
-
-                on_release: 
-                    app.root.current = 'newPlScreen'
-                    root.manager.transition.direction = "left"
-            Button:
-                text: "Settings"
-
-                on_release: 
-                    app.root.current = 'newPlScreen'
-                    root.manager.transition.direction = "left"
-
-        Label: 
+        Header: 
             text: "Sync-dl Playlists"
             size_hint_y:None
-            size: app.relSize(1,0.1)
-            font_size: dp(20)
+
+            font_size: sp(20)
+            height: sp(self.font_size+20)
 
         ScrollView:
 
             PlaylistList:
                 id: playlists
-
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: root.height*0.07
+                
+        Header:
+            text:''
+            height: root.height*0.05

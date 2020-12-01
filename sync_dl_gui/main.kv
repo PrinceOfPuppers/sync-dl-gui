@@ -6,8 +6,23 @@
 #:include screens/newPlScreen.kv
 #:include screens/reOrderScreen.kv
 
-SManager:
-    MainScreen:
-    NewPlScreen:
-    ExistingPlScreen:
-    ReOrderScreen:
+FloatLayout:
+    manager: manager
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Image:
+            source: 'test.jpg'
+            allow_stretch: True
+            keep_ratio: True
+            size_hint_y: None
+            size_hint_x: None
+
+            width: max((self.parent.height*self.image_ratio,self.parent.width))
+            height: max((self.parent.width/self.image_ratio,self.parent.height))
+    SManager:
+        id: manager
+        MainScreen:
+        NewPlScreen:
+        ExistingPlScreen:
+        ReOrderScreen:

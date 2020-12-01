@@ -12,7 +12,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.behaviors import DragBehavior
-
+from kivy.metrics import sp
 
 import os
 import threading
@@ -21,6 +21,8 @@ from queue import Queue
 import sync_dl.config as cfg
 
 from sync_dl.helpers import getLocalSongs
+class LabelPlate(Button):
+    pass
 
 class ConsoleHandler(logging.Handler):
 
@@ -68,7 +70,7 @@ class PlaylistList(GridLayout):
                 self.add_widget(button)
     
     def playlistClicked(self,button):
-        manager = App.get_running_app().root
+        manager = App.get_running_app().root.manager
 
         existingPlScreen = manager.get_screen('existingPlScreen')
         existingPlScreen.plName = button.text
@@ -98,16 +100,19 @@ class SongList(GridLayout):
 
         for i,song in enumerate(localSongs):
             self.add_widget(DragLabel(self,i,text=song))
+    
 
 
 class DragLabel(DragBehavior, Label):
 
     def __init__(self,grid,initalIndex, **kwargs):
         super(DragLabel, self).__init__(**kwargs)
-        
         self.moving = False
         self.grid = grid
         self.initalIndex = initalIndex
+        self.font_size = sp(15)
+        self.initalFontSize = self.font_size
+        self.dragFontSize = sp(17)
 
 
     def findNearestSlot(self):
@@ -123,16 +128,22 @@ class DragLabel(DragBehavior, Label):
             self.grid.remove_widget(self)
             index = self.findNearestSlot()
             self.grid.add_widget(self,index)
+            self.font_size=self.initalFontSize
 
 
     def on_touch_move(self,touch):
         super().on_touch_move(touch)
 
+
     def on_touch_down(self,touch):
         super().on_touch_down(touch)
 
         if self.collide_point(touch.x,touch.y):
+            
+            self.font_size=self.dragFontSize
+            
             self.moving = True
+
 
 
 

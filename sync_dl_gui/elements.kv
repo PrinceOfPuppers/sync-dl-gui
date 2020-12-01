@@ -1,22 +1,53 @@
 
+
+#:set transparancy 0.9
+
+
+#:set darkGrey 30/255,31/255,28/255, 1
+##:set grey 39/255,40/255,34/255, 1
+#:set grey 136/255,132/255,111/255,1
+#:set lightGrey 117/255,113/255,94/255, 1
+#:set white 248/255,248/255,240/255, 1
+
+#:set purple 174/255,129/255,255/255, 1
+#:set yellow 230/255,219/255,116/255, 1
+#:set green 166/255,226/255,46/255, 1
+#:set blue 102/255,217/255,239/255, 1
+#:set pink 249/255,38/255,114/255, 1
+#:set orange 253/255,151/255,31/255, 1
+#:set red 24/2554,7/2551,71/255, 1
+
+#:set darkGreyA 30/255,31/255,28/255, transparancy
+##:set greyA 39/255,40/255,34/255, transparancy
+#:set greyA 136/255,132/255,111/255,transparancy
+#:set lightGreyA 117/255,113/255,94/255, transparancy
+#:set whiteA 248/255,248/255,240/255, transparancy
+
+#:set purpleA 174/255,129/255,255/255, transparancy
+#:set yellowA 230/255,219/255,116/255, transparancy
+#:set greenA 166/255,226/255,46/255, transparancy
+#:set blueA 102/255,217/255,239/255, transparancy
+#:set pinkA 249/255,38/255,114/255, transparancy
+#:set orangeA 253/255,151/255,31/255, transparancy
+#:set redA 24/2554,7/2551,71/255, transparancy
+
 # Functional
 <Console>
-    foreground_color: (1,1,1,1)
-    background_color: (1,1,1,0)
+    foreground_color: white
+    background_color: darkGreyA
     font_name: 'RobotoMono-Regular'
 
-<PlaylistList>
-    orientation: "vertical"
-    size_hint_y: None
-    height: self.minimum_height
-    row_default_height: 60
-    cols:1
+
+
+
+
 
 <DragLabel>
     # Define the properties for the DragLabel
     drag_rectangle: self.x, self.y, self.width, self.height
     drag_timeout: 10000000
     drag_distance: 0
+    font_size: sp(12)
 
 <SongList>
     cols:1
@@ -26,32 +57,43 @@
     row_default_height: 40
 
 
-<Button@Button>:
+    canvas.before:
+        Color:
+            rgba: darkGreyA
+        Rectangle:
 
-    padding:10,10
+            pos: self.pos
+            size: self.size
+
 
 
 # Visual
-<Title@Label>:
+<Spacer@Label>:
     size_hint_y:None
-    size: app.relSize(1,0.25)
+    text:''
 
-    font_size: dp(80)
+<LabelPlate@Button>
+    disabled: True
+    font_size: sp(20)
+    disabled_color:self.color
+    background_disabled_normal: self.background_normal
 
-<Header@Label>:
+
+<Button@Button>:
+    background_color: greyA
+    font_size: sp(20)
+
+<Title@LabelPlate>:
+
+    background_color: darkGreyA
+    font_size: sp(80)
     size_hint_y:None
-    size: app.relSize(1,0.15)
-
-    font_size: dp(50)
+    height: 2*self.font_size
 
 
-
-
-<BottomButtons@GridLayout>:
+<Header@LabelPlate>:
     size_hint_y:None
-    size: app.relSize(1,0.1)
+    background_color: darkGreyA
+    font_size: sp(80)
+    height: 2*self.font_size
 
-
-<MidButtons@GridLayout>:
-    size_hint_y:None
-    size: app.relSize(1,0.1)
