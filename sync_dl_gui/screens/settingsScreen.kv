@@ -1,0 +1,41 @@
+<SettingsScreen>:
+    name: "settingsScreen"
+
+    GridLayout:
+        cols:1
+
+        Title: 
+            text: "Sync-DL"
+        
+        GridLayout:
+            cols:2
+
+            LabelPlate: 
+                text: "Sync-DL Version"
+                size_hint_y:None
+
+                height: root.height*0.1
+
+            LabelPlate:
+                text: root.getSyncDlVersion()
+                size_hint_y:None
+                height: root.height*0.1
+        
+
+        GridLayout:
+            cols:2
+            size_hint_y:None
+            height: root.height*0.1
+            Button: 
+                text: "Back"
+                background_color:darkGreyA
+                on_release: 
+
+                    root.manager.current = 'mainScreen'
+                    root.manager.transition.direction = "right"
+            
+            #Button: 
+            #    background_color:darkGreyA
+            #    text: "Cancel"
+            #    on_release: 
+            #        root.cancel()

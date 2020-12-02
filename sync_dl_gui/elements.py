@@ -16,6 +16,7 @@ from kivy.metrics import sp
 
 import os
 import threading
+from glob import glob
 from queue import Queue
 
 import sync_dl.config as cfg
@@ -36,12 +37,14 @@ class ConsoleHandler(logging.Handler):
 class Console(TextInput):
     def __init__(self, **kwargs):
         super(Console, self).__init__(**kwargs)
-        #self.keyboard_mode= 'managed'
-        self.cursor=False
+        self.keyboard_mode= 'managed'
+        self.cursor = False
+        self.cursor_blink = False
 
         cfg.logger.addHandler(ConsoleHandler(self))
 
     def append(self,text):
+        self.cursor
         self.readonly=False
         self.insert_text(f' ~ {text}\n')
         self.readonly=True
@@ -60,12 +63,12 @@ class PlaylistList(GridLayout):
         '''
         self.clear_widgets()
         playlists = os.listdir(cfg.musicDir)
+
         for playlist in playlists:
-            if os.path.exists(f"{cfg.musicDir}/{playlist}/{cfg.metaDataName}"):
+            if glob(f"{cfg.musicDir}/{playlist}/{cfg.metaDataName}*"):
                 button = Button(
                     text=playlist,
                     on_press = self.playlistClicked
-                    #on_release = test
                 )
                 self.add_widget(button)
     
@@ -131,10 +134,6 @@ class DragLabel(DragBehavior, Label):
             self.font_size=self.initalFontSize
 
 
-    def on_touch_move(self,touch):
-        super().on_touch_move(touch)
-
-
     def on_touch_down(self,touch):
         super().on_touch_down(touch)
 
@@ -145,6 +144,24 @@ class DragLabel(DragBehavior, Label):
             self.moving = True
 
 
+class CustomTextInput(TextInput):
+    def __init__(self,**kwargs):
+        super(CustomTextInput, self).__init__(**kwargs)
 
+        self.use_bubble = True
 
+    def _hide_cut_copy_paste(self, win=None):
 
+        bubble = self._bubble
+
+        if not bubble:
+            return
+
+    
+    def on_touch_down(self,touch):
+        super().on_touch_down(touch)
+        bubble = self._bubble
+
+        if not bubble:
+            return
+        self._bubble.hide()

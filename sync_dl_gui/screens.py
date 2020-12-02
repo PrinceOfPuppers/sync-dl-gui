@@ -23,6 +23,7 @@ import threading
 from queue import Queue
 
 from io import StringIO
+import pkg_resources
 import sync_dl
 import sync_dl.commands as cmds
 from sync_dl.plManagement import editPlaylist
@@ -164,3 +165,11 @@ class ReOrderScreen(Screen):
     
     def cancel(self):
         self.songList.updateSongs(f"{cfg.musicDir}/{self.plName}")
+
+class SettingsScreen(Screen):
+
+    def getSyncDlVersion(self):
+        return pkg_resources.require("sync_dl")[0].version
+
+    def getPlPath(self):
+        return cfg.musicDir
