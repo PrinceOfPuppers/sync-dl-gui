@@ -18,12 +18,14 @@ class Main(App):
     def build(self):
 
         layout = Builder.load_file('main.kv')
+
         return layout
 
     # methods used within kv scripts
     def relSize(self,x,y):
         '''converts size from proportion of screen to actual size'''
         return (2*Window.width*x,2*Window.height*y)
+        
 
 
 import youtube_dl
@@ -34,31 +36,24 @@ import shutil
 if __name__ == "__main__":
     import certifi
 
-    print("here")
     os.environ['SSL_CERT_FILE'] = certifi.where()
-    print("here2")
-    
 
+    
     if not os.path.exists(cfg.musicDir):
         cfg.musicDir = '/storage/emulated/0/Music'
 
+    
+
 
     cfg.params['quiet'] = True
+
     cfg.params['no_warnings'] = True
-    cfg.params['logger'] = cfg.logger
+    cfg.params['ignoreerrors'] = True
+    #cfg.params['logger'] = cfg.logger
     cfg.params['postprocessors'] = []
 
     if not os.path.exists(cfg.musicDir):
         raise Exception(f"{cfg.musicDir} Doesnt Exist")
 
-    print("got here")
 
-
-
-    merger = youtube_dl.postprocessor.FFmpegMergerPP() 
-    merger._determine_executables() 
-    print(merger.get_versions())
-
-    
     Main().run()
-    print("End")

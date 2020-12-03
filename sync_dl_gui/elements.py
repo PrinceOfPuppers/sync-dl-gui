@@ -14,6 +14,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.behaviors import DragBehavior
 from kivy.metrics import sp
 
+import sys
 import os
 import threading
 from glob import glob
@@ -38,13 +39,15 @@ class Console(TextInput):
     def __init__(self, **kwargs):
         super(Console, self).__init__(**kwargs)
         self.keyboard_mode= 'managed'
-        self.cursor = False
-        self.cursor_blink = False
 
+        self.use_bubble=False
         cfg.logger.addHandler(ConsoleHandler(self))
 
+    def on_focus(self,instance, value):
+        self.focus=False
+
     def append(self,text):
-        self.cursor
+        self.cursor=(0,sys.maxsize)
         self.readonly=False
         self.insert_text(f' ~ {text}\n')
         self.readonly=True
@@ -114,6 +117,8 @@ class DragLabel(DragBehavior, Label):
         self.grid = grid
         self.initalIndex = initalIndex
         self.font_size = sp(15)
+        self.size_hint_y = None
+        self.height = 2*self.font_size
         self.initalFontSize = self.font_size
         self.dragFontSize = sp(17)
 
@@ -157,7 +162,7 @@ class CustomTextInput(TextInput):
         if not bubble:
             return
 
-    
+
     def on_touch_down(self,touch):
         super().on_touch_down(touch)
         bubble = self._bubble

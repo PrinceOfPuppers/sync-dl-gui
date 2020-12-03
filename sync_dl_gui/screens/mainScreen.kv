@@ -1,17 +1,19 @@
 
 <Buttons@GridLayout>:
 
-    padding:(10,10)
-    spacing:(10,10)
+    padding:(gaps,gaps)
+    spacing:(gaps,gaps)
 
     cols:1
 
     console:console
 
     Console:
+        size_hint_y:None
+        height: root.height*0.6
         id: console
     GridLayout:
-        spacing:(10,10)
+        spacing:(gaps,gaps)
         cols:2
         Button:
             text: "New Playlist"
@@ -27,10 +29,10 @@
                 app.root.manager.transition.direction = "left"
 
 <PlaylistList>
-    orientation: "vertical"
+    #orientation: "vertical"
 
     cols:1
-    padding:(10,0)
+    padding:(gaps,0)
 
 <MainScreen>:
     name: "mainScreen"
@@ -45,7 +47,7 @@
         Buttons:
             id:console
             size_hint_y:None
-            height: root.height*0.4
+            height: root.height*0.35
 
         Header: 
             text: "Sync-dl Playlists"

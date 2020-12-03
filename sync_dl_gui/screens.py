@@ -82,8 +82,17 @@ class SManager(ScreenManager):
     def __init__(self,**kwargs):
         super(SManager, self).__init__(**kwargs)
         cfg.logger.setLevel(logging.INFO)
+        Window.bind(on_keyboard=self.hook_keyboard)
+ 
 
+    def hook_keyboard(self, window, key, *largs):
+        if key == 27:
 
+            if(self.current=='mainScreen'):
+                App.get_running_app().stop()
+            self.current='mainScreen'
+            self.transition.direction = 'right'
+            return True 
 
 class MainScreen(Screen):
     playlists = ObjectProperty(None)
@@ -167,9 +176,21 @@ class ReOrderScreen(Screen):
         self.songList.updateSongs(f"{cfg.musicDir}/{self.plName}")
 
 class SettingsScreen(Screen):
+    musicDir = ObjectProperty(None)
+    console =  ObjectProperty(None)
 
     def getSyncDlVersion(self):
         return pkg_resources.require("sync_dl")[0].version
 
-    def getPlPath(self):
+    def getMusicDir(self):
         return cfg.musicDir
+    
+    def setMusicDir(self):
+        path = self.musicDir.text.strip()
+        if not os.path.exists(path):
+            cfg.logger.info(f"{path} Does Not Exist")
+            return
+        
+        cfg.writeToConfig('musicDir',self.musicDir.text.strip())
+
+        cfg.logger.info(f"Music Directory Changed")

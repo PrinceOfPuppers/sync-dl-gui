@@ -2,15 +2,15 @@
 <MidButtons@GridLayout>
     cols:2
 
-    padding:(10,10)
-    spacing:(10,10)
+    padding:(gaps,gaps)
+    spacing:(gaps,gaps)
     Button:
         text: "Smart Sync"
         on_release: 
             root.parent.parent.smartSync()
     Button:
 
-        text: "Append New Songs"
+        text: "   Append \nNew Songs"
         on_release: 
             root.parent.parent.appendNew()
 
@@ -39,11 +39,14 @@
             height: root.height*0.3
 
         GridLayout:
-            padding:(10,0,10,10)
+            padding:(gaps,0,gaps,gaps)
 
             cols:1
+
             Console:
                 id: console
+
+
 
         GridLayout:
             cols:2

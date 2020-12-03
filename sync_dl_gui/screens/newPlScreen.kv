@@ -1,6 +1,6 @@
 <CreateButton@GridLayout>
     cols:1
-    padding:(10,0)
+    padding:(gaps,0)
     size_hint_y:None
     Button: 
         text: "Create"
@@ -21,8 +21,8 @@
 
         GridLayout:
             cols:2
-            padding:(10,10)
-            spacing:(10,10)
+            padding:(gaps,gaps)
+            spacing:(0,gaps)
 
             LabelPlate:
                 text: "URL"
@@ -38,6 +38,9 @@
                 id: url
                 background_color:darkGreyA
                 foreground_color: white
+                #on_text_validate: root.plName.focus=True
+                halign:'center'
+                padding:(0,self.height/2 - self.line_height*len(self._lines)/2 )
                 #use_bubble: True
                 #multiline: False
 
@@ -55,8 +58,11 @@
                 id: plName
                 background_color:darkGreyA
                 foreground_color: white
+                halign:'center'
+                padding:(0,self.height/2- self.line_height/2)
+                on_text_validate: root.create()
                 #use_bubble: True
-                #multiline: False
+                multiline: False
 
 
 
@@ -67,7 +73,7 @@
 
 
         GridLayout:
-            padding:(10,10)
+            padding:(gaps,gaps)
             cols:1
             Console:
                 id: console
