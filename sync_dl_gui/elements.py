@@ -66,7 +66,6 @@ class Console(TextInput):
         self.scrollView.scroll_y = 0
 
 
-
 class PlaylistList(GridLayout):
     def __init__(self, **kwargs):
         super(PlaylistList, self).__init__(**kwargs)
@@ -170,7 +169,6 @@ class CustomTextInput(TextInput):
         self.use_bubble = True
 
     def _hide_cut_copy_paste(self, win=None):
-
         bubble = self._bubble
 
         if not bubble:

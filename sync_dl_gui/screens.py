@@ -106,12 +106,6 @@ class MainScreen(Screen):
         if self.playlists:
             self.playlists.updateList()
     
-    def close(self):
-        if kivy.utils.platform=='android':
-            app = App.get_running_app()
-            app.stop()
-        else:
-            sys.exit()
 
     
 class NewPlScreen(Screen):
@@ -156,8 +150,8 @@ class ExistingPlScreen(Screen):
         noInterrupt.simulateSigint()
     
     def info(self):
-        runner.addJob(cmds.compareMetaData,f"{cfg.musicDir}/{self.plName}")
-        runner.addJob(cmds.showPlaylist,f"{cfg.musicDir}/{self.plName}",'')
+        #runner.addJob(cmds.compareMetaData,f"{cfg.musicDir}/{self.plName}")
+        runner.addJob(cmds.showPlaylist,f"{cfg.musicDir}/{self.plName}",'\n')
 
 class ReOrderScreen(Screen):
     plName = ''

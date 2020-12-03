@@ -16,18 +16,41 @@ import shutil
 import certifi
 from time import sleep
 
+
 class Main(App):
     def build(self):
 
         layout = Builder.load_file('main.kv')
 
+        if kivy.utils.platform == "android":
+            from android.runnable import run_on_ui_thread
+            @run_on_ui_thread
+            def changeBarColor():
+                if kivy.utils.platform == "android":
+
+                    from jnius import autoclass
+
+
+                    Color = autoclass("android.graphics.Color")
+                    WindowManager = autoclass('android.view.WindowManager$LayoutParams')
+                    activity = autoclass('org.kivy.android.PythonActivity').mActivity
+
+                    window = activity.getWindow()
+                    window.clearFlags(WindowManager.FLAG_TRANSLUCENT_STATUS)
+                    window.addFlags(WindowManager.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.setStatusBarColor(Color.parseColor("#000000")) 
+                    window.setNavigationBarColor(Color.parseColor("#000000"))
+                    
+            changeBarColor()
         return layout
 
     # methods used within kv scripts
     def relSize(self,x,y):
         '''converts size from proportion of screen to actual size'''
         return (2*Window.width*x,2*Window.height*y)
-        
+
+
+
 
 def permissionsGranted():
     return check_permission(Permission.READ_EXTERNAL_STORAGE) and check_permission(Permission.WRITE_EXTERNAL_STORAGE)
@@ -48,6 +71,8 @@ if __name__ == "__main__":
             cfg.musicDir = '/storage/emulated/0/Music'
         if not os.path.exists(cfg.musicDir):
             raise Exception(f"{cfg.musicDir} Doesnt Exist")
+
+
             
 
     os.environ['SSL_CERT_FILE'] = certifi.where()
