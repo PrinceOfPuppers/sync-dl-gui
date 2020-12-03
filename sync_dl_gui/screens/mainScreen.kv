@@ -8,10 +8,13 @@
 
     console:console
 
-    Console:
-        size_hint_y:None
-        height: root.height*0.6
-        id: console
+    ScrollView:
+        Console:
+            scrollView:self.parent
+            size_hint_y: None
+            height: max(self.minimum_height,self.parent.height)
+            id: console
+
     GridLayout:
         spacing:(gaps,gaps)
         cols:2
@@ -64,6 +67,12 @@
                 height: self.minimum_height
                 row_default_height: root.height*0.07
                 
-        Header:
-            text:''
-            height: root.height*0.05
+
+
+        Button:
+            size_hint_y:None
+            background_color:darkGreyA
+            text: 'Close'
+            height: root.height*0.1
+            on_release:
+                root.close()

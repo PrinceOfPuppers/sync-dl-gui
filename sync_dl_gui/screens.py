@@ -30,6 +30,7 @@ from sync_dl.plManagement import editPlaylist
 from sync_dl import noInterrupt
 import sync_dl.config as cfg
 import time
+import sys
 
 from elements import Console,PlaylistList
 
@@ -104,6 +105,13 @@ class MainScreen(Screen):
     def on_pre_enter(self):
         if self.playlists:
             self.playlists.updateList()
+    
+    def close(self):
+        if kivy.utils.platform=='android':
+            app = App.get_running_app()
+            app.stop()
+        else:
+            sys.exit()
 
     
 class NewPlScreen(Screen):

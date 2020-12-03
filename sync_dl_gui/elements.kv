@@ -37,13 +37,8 @@
 <Console>
     foreground_color: white
     background_color: darkGreyA
-    font_name: 'RobotoMono-Regular'
+    font_name:'assets/DroidSansFallback.ttf'
     font_size:sp(13)
-
-
-
-
-
 
 
 <DragLabel>
@@ -51,7 +46,9 @@
     drag_rectangle: self.x, self.y, self.width, self.height
     drag_timeout: 10000000
     drag_distance: 0
-    font_size: sp(12)
+    font_size:sp(13)
+
+    font_name:'assets/DroidSansFallback.ttf'
 
 <SongList>
     cols:1
@@ -77,6 +74,7 @@
     text:''
 
 <LabelPlate@Button>
+    font_name:'assets/DroidSansFallback.ttf'
     disabled: True
     font_size: sp(20)
     disabled_color:self.color
@@ -84,20 +82,21 @@
 
 
 <Button@Button>:
+    font_name:'assets/DroidSansFallback.ttf'
     background_color: greyA
     font_size: sp(20)
 
 <Title@LabelPlate>:
-
+    font_name:'assets/DroidSansFallback.ttf'
     background_color: darkGreyA
-    font_size: sp(60)
+    font_size: sp(40)
     size_hint_y:None
     height: 2*self.font_size
 
 
 <Header@LabelPlate>:
+    font_name:'assets/DroidSansFallback.ttf'
     size_hint_y:None
     background_color: darkGreyA
-    font_size: sp(60)
+    font_size: sp(40)
     height: 2*self.font_size
-

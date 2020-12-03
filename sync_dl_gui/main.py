@@ -10,7 +10,7 @@ from kivy.config import Config
 
 import sync_dl.config as cfg
 import os
-from android.permissions import request_permissions, Permission
+
 import youtube_dl
 import shutil
 import certifi
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     cfg.params['ignoreerrors'] = True
     #cfg.params['logger'] = cfg.logger
     cfg.params['postprocessors'] = []
-
+    
 
 
     Main().run()

@@ -13,6 +13,7 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.behaviors import DragBehavior
 from kivy.metrics import sp
+from kivy.properties import ObjectProperty
 
 import sys
 import os
@@ -36,6 +37,9 @@ class ConsoleHandler(logging.Handler):
         Clock.schedule_once(lambda x:self.console.append(self.format(record)))
 
 class Console(TextInput):
+
+    scrollView = ObjectProperty(None)
+    
     def __init__(self, **kwargs):
         super(Console, self).__init__(**kwargs)
         self.keyboard_mode= 'managed'
@@ -45,12 +49,21 @@ class Console(TextInput):
 
     def on_focus(self,instance, value):
         self.focus=False
-
+    
+    def on_double_tap(self):
+        self.focus=False
+    
+    def on_triple_tap(self):
+        self.focus=False
+    
+    def on_quad_touch(self):
+        self.focus=False
     def append(self,text):
         self.cursor=(0,sys.maxsize)
         self.readonly=False
         self.insert_text(f' ~ {text}\n')
         self.readonly=True
+        self.scrollView.scroll_y = 0
 
 
 
@@ -116,11 +129,12 @@ class DragLabel(DragBehavior, Label):
         self.moving = False
         self.grid = grid
         self.initalIndex = initalIndex
-        self.font_size = sp(15)
+
         self.size_hint_y = None
+        self.dragFontSize = 1.4*self.font_size
         self.height = 2*self.font_size
         self.initalFontSize = self.font_size
-        self.dragFontSize = sp(17)
+
 
 
     def findNearestSlot(self):

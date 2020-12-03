@@ -43,11 +43,13 @@
 
             cols:1
 
-            Console:
-                id: console
 
-
-
+            ScrollView:
+                Console:
+                    scrollView:self.parent
+                    size_hint_y: None
+                    height: max(self.minimum_height,self.parent.height)
+                    id: console
         GridLayout:
             cols:2
             size_hint_y:None
