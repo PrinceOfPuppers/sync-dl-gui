@@ -10,9 +10,11 @@ from kivy.config import Config
 
 import sync_dl.config as cfg
 import os
-  
-# 0 being off 1 being on as in true / false 
-# you can use 0 or 1 && True or False 
+from android.permissions import request_permissions, Permission
+import youtube_dl
+import shutil
+import certifi
+from time import sleep
 
 class Main(App):
     def build(self):
@@ -27,23 +29,28 @@ class Main(App):
         return (2*Window.width*x,2*Window.height*y)
         
 
+def permissionsGranted():
+    return check_permission(Permission.READ_EXTERNAL_STORAGE) and check_permission(Permission.WRITE_EXTERNAL_STORAGE)
 
-import youtube_dl
-import shutil
-
-
+def getPermissions():
+    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
 if __name__ == "__main__":
-    import certifi
+    if kivy.utils.platform == "android":
+
+        from android.permissions import request_permissions,check_permission, Permission
+    
+        while not permissionsGranted():
+            sleep(0.1)
+            getPermissions()
+
+        if not os.path.exists(cfg.musicDir):
+            cfg.musicDir = '/storage/emulated/0/Music'
+        if not os.path.exists(cfg.musicDir):
+            raise Exception(f"{cfg.musicDir} Doesnt Exist")
+            
 
     os.environ['SSL_CERT_FILE'] = certifi.where()
-
-    
-    if not os.path.exists(cfg.musicDir):
-        cfg.musicDir = '/storage/emulated/0/Music'
-
-    
-
 
     cfg.params['quiet'] = True
 
@@ -52,8 +59,6 @@ if __name__ == "__main__":
     #cfg.params['logger'] = cfg.logger
     cfg.params['postprocessors'] = []
 
-    if not os.path.exists(cfg.musicDir):
-        raise Exception(f"{cfg.musicDir} Doesnt Exist")
 
 
     Main().run()
