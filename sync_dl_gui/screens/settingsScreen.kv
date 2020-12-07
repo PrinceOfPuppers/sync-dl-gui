@@ -12,9 +12,9 @@
     name: "settingsScreen"
     musicDir:musicDir
     console: console
-    GridLayout:
-        cols:1
-        
+    BoxLayout:
+        orientation:'vertical'
+
         Title: 
             text: "Settings"
         
@@ -22,6 +22,8 @@
             cols:2
             padding:(gaps,gaps)
             spacing:(0,gaps)
+            size_hint_y:None
+            height:self.minimum_height
 
             LabelPlate: 
                 text: "Backend\nVersion"
@@ -33,9 +35,6 @@
             SettingTextEntry:
                 text: root.getSyncDlVersion()
                 use_bubble:False
-                #readonly:True
-                
-
 
             LabelPlate:
                 text: "Music\nDirectory"
@@ -53,22 +52,23 @@
                 text: root.getMusicDir()
                 on_text_validate: root.setMusicDir()
 
-            
+
+
+
+        GridLayout:
+            cols:1
+            padding:(gaps,0,gaps,gaps)
+            spacing:(0,gaps)
             Button: 
                 background_color:greyA
                 text: "Apply"
 
                 size_hint_y:None
-                size_hint_x:None
-                width: root.width*0.3
                 height: root.height*0.1
                 on_release: 
                     root.setMusicDir()
 
-
-            ScrollView:
-                size_hint_y:None
-                height: root.height*0.1
+            ScrollView:                
                 Console:
                     scrollView:self.parent
                     size_hint_y:None
@@ -79,9 +79,35 @@
             
 
         GridLayout:
+            cols:2
+            size_hint_y:None
+            height:self.minimum_height
+
+            Button: 
+                background_color: greyA
+                text: "GitHub FrontEnd"
+
+                size_hint_y:None
+
+                height: root.height*0.1
+                on_release: 
+                    root.FrontEndLink()
+
+            Button: 
+                background_color: greyA
+                text: "GitHub Backend"
+
+                size_hint_y:None
+
+                height: root.height*0.1
+                on_release: 
+                    root.backEndLink()
+        GridLayout:
             cols:1
+            
             size_hint_y:None
             height: root.height*0.1
+
             Button: 
                 text: "Back"
                 background_color:darkGreyA

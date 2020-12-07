@@ -31,6 +31,7 @@ from sync_dl import noInterrupt
 import sync_dl.config as cfg
 import time
 import sys
+import webbrowser
 
 from elements import Console,PlaylistList
 
@@ -196,3 +197,9 @@ class SettingsScreen(Screen):
         cfg.writeToConfig('musicDir',self.musicDir.text.strip())
 
         cfg.logger.info(f"Music Directory Changed")
+    
+    def FrontEndLink(self):
+        webbrowser.open('https://github.com/PrinceOfPuppers/sync-dl-gui')
+    
+    def backEndLink(self):
+        webbrowser.open('https://github.com/PrinceOfPuppers/sync-dl')
