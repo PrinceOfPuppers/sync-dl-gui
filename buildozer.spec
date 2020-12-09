@@ -210,7 +210,7 @@ android.api = 29
 #android.wakelock = False
 
 # (list) Android application meta-data to set (key=value format)
-#android.meta_data =
+# android.meta_data = 
 
 # (list) Android library project to add (will be added in the
 # project.properties automatically.)
