@@ -1,9 +1,35 @@
+<img align="left" width="40" height="40" src="sync_dl_gui/assets/icon.png">
+
 # sync-dl-gui
+
 > An App for downloading and syncing remote playlists to your phone
+- [INSTALLATION](#INSTALLATION)
 - [ABOUT](#ABOUT)
 - [DEVLOPMENT](#DEVLOPMENT)
 - [DEPLOYMENT](#DEPLOYMENT)
+- [SCREENSHOTS](#SCREENSHOTS)
 
+
+# INSTALLATION
+## With Google Play
+[<img src = Images/google-play-badge.png  width = 300/>](https://play.google.com/store/apps/details?id=org.princeofpuppers.sync_dl_gui)
+
+## With adb
+Install adb https://developer.android.com/studio/command-line/adb
+
+Connect smartphone to computer via usb
+
+Download either apk in the release (they are the 32 and 62 bit versions respectively)
+https://github.com/PrinceOfPuppers/sync-dl-gui/releases/tag/1.0
+
+32 Bit:
+```
+adb install path/to/download/sync_dl_gui_armeabi_v7a_1.0.apk
+```
+64 Bit:
+```
+adb install path/to/download/sync_dl_gui_armeabi_v7a_1.0.apk
+```
 # ABOUT
 Created to avoid having music deleted but still have the convenience of browsing, adding and reordering new music using remote services such as youtube.
 
@@ -108,7 +134,6 @@ jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore path/to/keystore bin/syn
 install zipalign
 ```
 zipalign -c -v 4 bin/sync_dl_gui-1.0-armeabi-v7a-release-unsigned.apk bin/sync_dl_gui_armeabi_v7a_1.0.apk
-
 ```
 
 ## Test apk
@@ -121,3 +146,9 @@ Google Play requires both 32 and 64 bit releases
 
 ## Google Console
 Follow Google Consoles step by step guide for releaseing an the application
+
+
+# SCREENSHOTS
+<img src = Images/1.jpg  width = 250/>
+<img src = Images/2.jpg  width = 250/>
+<img src = Images/3.jpg  width = 250/>
