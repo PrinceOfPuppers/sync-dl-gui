@@ -149,6 +149,8 @@ Follow Google Consoles step by step guide for releaseing an the application
 
 
 # SCREENSHOTS
+<p float="left">
 <img src = Images/1.jpg  width = 250/>
 <img src = Images/2.jpg  width = 250/>
 <img src = Images/3.jpg  width = 250/>
+</p>
