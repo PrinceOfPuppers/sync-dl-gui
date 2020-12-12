@@ -1,4 +1,4 @@
-<img align="left" width="40" height="40" src="sync_dl_gui/assets/icon.png">
+<img align="left" width="80" height="80" src="sync_dl_gui/assets/icon.png">
 
 # sync-dl-gui
 
