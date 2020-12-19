@@ -79,13 +79,13 @@
             
 
         GridLayout:
-            cols:2
+            cols:3
             size_hint_y:None
             height:self.minimum_height
 
             Button: 
                 background_color: greyA
-                text: "GitHub FrontEnd"
+                text: "GitHub \nFrontEnd"
 
                 size_hint_y:None
 
@@ -95,13 +95,23 @@
 
             Button: 
                 background_color: greyA
-                text: "GitHub Backend"
+                text: "GitHub \nBackend"
 
                 size_hint_y:None
 
                 height: root.height*0.1
                 on_release: 
                     root.backEndLink()
+            
+            Button: 
+                background_color: greyA
+                text: "Artist \nWebsite"
+
+                size_hint_y:None
+
+                height: root.height*0.1
+                on_release: 
+                    root.bgArtLink()
         GridLayout:
             cols:1
             
