@@ -26,7 +26,7 @@ import pkg_resources
 import sync_dl
 import sync_dl.commands as cmds
 from sync_dl.plManagement import editPlaylist
-from sync_dl import noInterrupt
+
 import sync_dl.config as cfg
 import time
 import sys
@@ -77,7 +77,7 @@ class NewPlScreen(Screen):
         runner.addJob(cmds.newPlaylist,f"{cfg.musicDir}/{self.plName.text}",self.url.text)
 
     def cancel(self):
-        noInterrupt.simulateSigint()
+        runner.cancel()
 
 
 class ExistingPlScreen(Screen):
@@ -106,7 +106,7 @@ class ExistingPlScreen(Screen):
         manager.transition.direction = "left"
     
     def cancel(self):
-        noInterrupt.simulateSigint()
+        runner.cancel()
     
     def info(self):
         #runner.addJob(cmds.compareMetaData,f"{cfg.musicDir}/{self.plName}")

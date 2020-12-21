@@ -15,7 +15,9 @@ import youtube_dl
 import shutil
 import certifi
 from time import sleep
+from sync_dl import noInterrupt
 
+from runner import runner
 
 class Main(App):
     def build(self):
@@ -44,6 +46,24 @@ class Main(App):
             changeBarColor()
         return layout
 
+    def on_pause(self):
+        print("pausing")
+        runner.cancel()
+        print('paused')
+        return True
+
+    def on_resume(self):
+        print("resuming")
+
+    def on_stop(self):
+        print("stopping")
+        runner.cancel()
+        return True
+
+    def on_start(self):
+        print("starting")
+        runner.start()
+        
     # methods used within kv scripts
     def relSize(self,x,y):
         '''converts size from proportion of screen to actual size'''

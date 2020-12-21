@@ -3,6 +3,7 @@ import threading
 from queue import Queue
 import sync_dl.config as cfg
 import sync_dl 
+from sync_dl import noInterrupt
 
 class Runner:
     '''
@@ -15,8 +16,8 @@ class Runner:
 
         self.working=False
 
-        self.t=threading.Thread(target = self.start)
-        self.t.start()
+        self.t=threading.Thread(target = self.loop)
+
 
     def addJob(self,job,plPath,*args):
         if self.working:
@@ -24,8 +25,12 @@ class Runner:
         else:
             self.jobQueue.put((job,plPath,args))
 
-
     def start(self):
+        self.running=True
+        self.t.start()
+
+
+    def loop(self):
         while threading.main_thread().is_alive():
             try:
                 package = self.jobQueue.get(timeout=3)
@@ -41,8 +46,10 @@ class Runner:
             except:
                 sync_dl.plManagement.correctStateCorruption(plPath)
                 cfg.logger.info("Cancelled")
-            
             self.working=False
 
+    def cancel(self):
+        if self.working:
+            noInterrupt.simulateSigint()
 
 runner=Runner()
