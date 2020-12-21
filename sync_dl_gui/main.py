@@ -47,21 +47,14 @@ class Main(App):
         return layout
 
     def on_pause(self):
-        print("pausing")
         runner.cancel()
-        print('paused')
         return True
 
-    def on_resume(self):
-        print("resuming")
-
     def on_stop(self):
-        print("stopping")
         runner.cancel()
         return True
 
     def on_start(self):
-        print("starting")
         runner.start()
         
     # methods used within kv scripts
