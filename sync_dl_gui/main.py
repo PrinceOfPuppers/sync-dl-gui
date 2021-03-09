@@ -97,6 +97,14 @@ if __name__ == "__main__":
     #cfg.params['logger'] = cfg.logger
     cfg.params['postprocessors'] = []
     
-
+    # android app has toggable format which saves
+    # cli just uses option, hence we need to parse config.ini here
+    try:
+        cfg.params['format'] = cfg.section['format']
+    except:
+        cfg.writeToConfig('format','m4a')
+        cfg.params['format'] = 'm4a'
+        
+    
 
     Main().run()

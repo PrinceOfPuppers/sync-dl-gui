@@ -164,3 +164,19 @@ class SettingsScreen(Screen):
     
     def bgArtLink(self):
         webbrowser.open('https://sonyakat.com')
+    
+    def onForceM4aClick(self):
+        if self.forceM4aCheckbox.active:
+            cfg.params["format"] = 'm4a'
+            cfg.writeToConfig('format','m4a')
+            cfg.logger.info(f"All Downloads Will Be in m4a Format")
+        else:
+            cfg.params["format"] = 'bestaudio'
+            cfg.writeToConfig('format','bestaudio')
+            cfg.logger.info(f"All Downloads Will Be in best audio Format")
+
+    def m4aForced(self):
+        '''used to set the inital state of the force m4a checkbox'''
+        if cfg.params["format"] == 'm4a':
+            return True
+        return False

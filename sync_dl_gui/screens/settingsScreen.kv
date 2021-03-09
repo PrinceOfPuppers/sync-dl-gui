@@ -1,3 +1,42 @@
+
+
+<MCQCheckBox@CheckBox>:
+    color: 1, 1, 1, 1
+    size_hint: 0.15, 1
+
+
+<MCQLabel@ButtonBehavior+Label>:
+    text_size: self.size
+    valign: 'center'
+    font_size: '13sp'
+    color: 1, 1, 1, 1
+
+
+<MCQLabelCheckBox@BoxLayout>:
+    text: ''
+
+    canvas.before:
+        Color:
+            rgba: darkGreyA
+        Rectangle:
+
+            pos: self.pos
+            size: self.size
+
+    LabelPlate:
+        disabled: False
+        on_press: cb._do_press()
+        text: root.text
+        
+    
+    MCQCheckBox:
+        halign:'center'
+        size_hint_y:None
+        size_hint_x:None
+        #padding:(0,self.height/2- self.line_height/2)
+        #height: root.parent.parent.parent.height*0.1
+        id: cb
+
 <SettingTextEntry@CustomTextInput>:
     background_color:darkGreyA
     foreground_color: white
@@ -12,6 +51,7 @@
     name: "settingsScreen"
     musicDir:musicDir
     console: console
+    forceM4aCheckbox: forceM4aCheckbox
     BoxLayout:
         orientation:'vertical'
 
@@ -25,6 +65,13 @@
             size_hint_y:None
             height:self.minimum_height
 
+        #GridLayout:
+        #    cols:2
+        #    padding:(gaps,gaps)
+        #    spacing:(0,gaps)
+        #    size_hint_y:None
+        #    height:self.minimum_height
+
             LabelPlate: 
                 text: "Backend\nVersion"
                 size_hint_y:None
@@ -36,6 +83,29 @@
                 text: root.getSyncDlVersion()
                 use_bubble:False
 
+            LabelPlate: 
+                disabled: False
+                on_press: 
+                    forceM4aCheckbox._do_press()
+                    root.onForceM4aClick()
+                text: "Force\nm4a"
+                size_hint_y:None
+                size_hint_x:None
+                width: root.width*0.3
+                height: root.height*0.1
+            
+            CheckBox:
+                id: forceM4aCheckbox
+                on_press: root.onForceM4aClick()
+                active: root.m4aForced()
+                canvas.before:
+                    Color:
+                        rgba: darkGreyA
+                    Rectangle:
+
+                        pos: self.pos
+                        size: self.size
+                
             LabelPlate:
                 text: "Music\nDirectory"
                 background_color:greyA
@@ -44,16 +114,11 @@
                 size_hint_x:None
                 width: root.width*0.3
                 height: root.height*0.1
-
-
             SettingTextEntry:
                 id: musicDir
                 multiline:False
                 text: root.getMusicDir()
                 on_text_validate: root.setMusicDir()
-
-
-
 
         GridLayout:
             cols:1
