@@ -168,15 +168,16 @@
                 on_release: 
                     root.backEndLink()
             
-            Button: 
-                background_color: greyA
-                text: "Artist \nWebsite"
-
-                size_hint_y:None
-
-                height: root.height*0.1
-                on_release: 
-                    root.bgArtLink()
+            # link to artists website is removed due to "mature content" flagged by google when attempting to update app
+            #Button: 
+            #    background_color: greyA
+            #    text: "Artist \nWebsite"
+#
+            #    size_hint_y:None
+#
+            #    height: root.height*0.1
+            #    on_release: 
+            #        root.bgArtLink()
         GridLayout:
             cols:1
             

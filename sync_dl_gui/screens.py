@@ -47,11 +47,9 @@ class SManager(ScreenManager):
 
     def hook_keyboard(self, window, key, *largs):
         if key == 27:
-
-            if(self.current=='mainScreen'):
-                App.get_running_app().stop()
-            self.current='mainScreen'
-            self.transition.direction = 'right'
+            if not (self.current=='mainScreen'):
+                self.current='mainScreen'
+                self.transition.direction = 'right'
             return True 
 
 class MainScreen(Screen):
@@ -162,8 +160,9 @@ class SettingsScreen(Screen):
     def backEndLink(self):
         webbrowser.open('https://github.com/PrinceOfPuppers/sync-dl')
     
-    def bgArtLink(self):
-        webbrowser.open('https://sonyakat.com')
+    # link to artists website is removed due to "mature content" flagged by google when attempting to update app
+    #def bgArtLink(self):
+    #    webbrowser.open('https://sonyakat.com')
     
     def onForceM4aClick(self):
         if self.forceM4aCheckbox.active:
