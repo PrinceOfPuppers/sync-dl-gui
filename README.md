@@ -1,6 +1,7 @@
 <img align="left" width="80" height="80" src="sync_dl_gui/assets/icon.png">
 
-# sync-dl-gui
+# sync-dl-gui (DEFUNCT)
+# This project is no longer being updated, and has been removed from google play.
 
 > An App for downloading and syncing remote playlists to your phone
 - [INSTALLATION](#INSTALLATION)
